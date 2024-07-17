@@ -5,7 +5,7 @@ export default function NewsItem(props) {
     <>
     
       <div className="card">
-        <img className="card-img-top img_hover" src={props.article.urlToImage?(props.article.urlToImage):"allah.jpg"}   alt="..."/>
+        <img className="card-img-top img_hover" src={props.article.urlToImage?(props.article.urlToImage):"nul"}   alt="..."/>
           <div className="card-body ">
            <h5 className="card-title">{(props.article.title)?(props.article.title).slice(0, 40):"NULL"}</h5>
            <p className="card-text">{props.article.description?(props.article.description).slice(0, 100):"Null"}</p>

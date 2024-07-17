@@ -15,8 +15,7 @@ function App() {
        <Route exact path="/"  element={<Home catagory="general" />}/>
        <Route exact path="/:name"  element={<Home />}/>
        <Route exact path="/General/:cnty"  element={<Home catagory="general" />}/>
-       <Route exact path="/General/lang/:langu"  element={<Home catagory="general" />}/>
-       {/* <Route exact path="/sports"  element={<Home catagory="sports"/>}/>
+      {/* <Route exact path="/sports"  element={<Home catagory="sports"/>}/>
        <Route exact path="/business"  element={<Home catagory="business"/>}/>
        <Route exact path="/entertainment"  element={<Home catagory="entertainment"/>}/>
        <Route exact path="/health"  element={<Home catagory="health"/>}/>

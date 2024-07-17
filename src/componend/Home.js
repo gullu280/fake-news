@@ -5,37 +5,19 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import NewsItem from './newsItem';
 import { useParams } from 'react-router-dom';
 export default function Home(props) {
-  const [pageSize ,setPageSize]=useState(20);
+  // const [pageSize ,setPageSize]=useState(20);
   const [article , setArticles]=useState();
   const [totalResults , setTotalresults]=useState(0);
   const [page, setPage1]=useState(1);
   const [Loding, setLoding]=useState(true);
   const [country, setCountry]=useState("us");
-  const [language, setLanguage]=useState("en");
   const param=useParams();
     const {cnty}=param;
     const {name}=param;
-    const {langu}=param;
- const CallingMethod= async ()=>{
-  if(cnty!==undefined){
-    setCountry(cnty);
-    }
-    if(langu!==undefined){
-      setLanguage(langu);
-      }
-  setTotalresults(0);
-  setPageSize(20);
-  let url=`https://newsapi.org/v2/top-headlines?language=${langu?langu:"en"}&country=${cnty?cnty:"us"}&category=${name? name:props.catagory}&pageSize=${pageSize}&page=1&apiKey=1b0e45a038104543b6dcdfc10b919d2c`;
-  setLoding(true);
-  const data= await fetch(url);
-  const fetchData=await data.json();
-  setArticles(fetchData.articles);
-  setTotalresults(fetchData.totalResults);
-  setLoding(false);
-  }
+    const url1 = `https://newsapi.org/v2/top-headlines?country=${cnty ? cnty : country}&category=${name ? name : props.catagory}&pageSize=20&page=1&apiKey=1b0e45a038104543b6dcdfc10b919d2c`;
   const Next= async()=>{
  
-    let url=`https://newsapi.org/v2/top-headlines?language=${language}&country=${country}&category=${name? name:props.catagory}&pageSize=${pageSize}&page=${page + 1}&apiKey=1b0e45a038104543b6dcdfc10b919d2c`;
+    let url=`https://newsapi.org/v2/top-headlines?country=${country}&category=${name? name:props.catagory}&pageSize=20&page=${page + 1}&apiKey=1b0e45a038104543b6dcdfc10b919d2c`;
 
     setPage1(page +1);
     const data= await fetch(url)
@@ -45,11 +27,30 @@ export default function Home(props) {
   }
   useEffect(()=>{
     setPage1(1);
-      CallingMethod();
+      if(cnty!==undefined){
+        setCountry(cnty);
+        }
+      setTotalresults(0);
      
-    },[name,props.catagory,cnty,langu]
+      setLoding(true);
+    
+      const fetchData = async () => {
+        const data = await fetch(url1);
+        const fetchData1 = await data.json();
+        
+        setArticles(fetchData1.articles);
+        setTotalresults(fetchData1.totalResults);
+        setLoding(false);
+      };
+      
+      fetchData();
+    },[url1,cnty]
+   
   )
-if(Loding) return  <h1> loding 5...</h1>
+  if(Loding) {
+    return <Spiner />;
+  }
+
    return (
     <div>
  
@@ -64,7 +65,7 @@ if(Loding) return  <h1> loding 5...</h1>
     <InfiniteScroll
       dataLength={article.length}
       next={Next}
-      hasMore={page<=Math.ceil(totalResults/pageSize)} 
+      hasMore={page<=Math.ceil(totalResults/20)} 
       loader={<Spiner/>}
       endMessage={ <footer className="footer text-center bg-primary">
       <div className="container">
