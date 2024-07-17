@@ -50,7 +50,6 @@ export default function Home(props) {
   if(Loding) {
     return <Spiner />;
   }
-
    return (
     <div>
  
@@ -63,7 +62,7 @@ export default function Home(props) {
     </div>
   </div>
     <InfiniteScroll
-      dataLength={article.length}
+      dataLength={20}
       next={Next}
       hasMore={page<=Math.ceil(totalResults/20)} 
       loader={<Spiner/>}
